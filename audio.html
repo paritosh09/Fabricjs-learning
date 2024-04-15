@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <title>Animated Gradient with Sound Track</title>
+        <!-- Fill the iOS screen /-->
+        <meta name="viewport" content="width=400" />
+        <style>
+            canvas {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                border-radius: 25px;
+                border: 1px solid #404040;
+            }
+            audio {
+                position: absolute;
+                top: 195px;
+                left: 60px;
+            }
+        </style>
+        <script type="text/javascript">
+            var can, ctx, audio,
+            var timer, angle = 0;
+     
+            function init() {
+                audio = document.getElementById("audio");
+                can = document.getElementById("can");
+                ctx = can.getContext("2d");
+                audio.addEventListener("playing", drawGradient, false);
+                audio.addEventListener("pause", stop, false);
+                audio.addEventListener("ended", stop, false);
+            }
+     
+            function stop() {
+                clearTimeout(timer);
+            }
+     
+            function drawGradient() {
+                // increment angle slowly from 0 to 2 PI
+                angle += 0.1;
+                if (angle >= 6.2)
+                    angle = 0;
+                    // create gradient that goes from bottom to top of canvas
+                var grad = ctx.createLinearGradient(0,can.height, 0,0);
+     
+                // start gradient at black
+                grad.addColorStop(0, 'black');
+     
+                // create changing rgb color values that go from 0 to 255
+                var gAngle = angle + Math.PI / 2;
+                var bAngle = gAngle + Math.PI;
+                var r = parseInt(255 * Math.abs(Math.sin(angle)));
+                var g = parseInt(255 * Math.abs(Math.sin(gAngle)));
+                var b = parseInt(255 * Math.abs(Math.sin(bAngle)));
+                var rgbCol = "rgb(" + r + "," + g + "," + b + ")";
+     
+                // add color stop with new rgb colors
+                grad.addColorStop(1, rgbCol);
+     
+                // fill canvas with gradient
+                ctx.save();
+                ctx.fillStyle = grad;
+                ctx.fillRect(0,0, can.width, can.height);
+                ctx.restore();
+                    // repeat while audio is not paused
+                if (!document.querySelector("audio").paused)
+                    timer = setTimeout(drawGradient, 100);
+            }
+        </script>
+    </head>
+    <body onload="init()">
+        <canvas id="can" height="200" width="300">
+        </canvas>
+        <audio id="audio" src="C:\Users\Paritosh-Andor\Downloads\mixkit-speeding-swoosh-1484.wav" controls>
+        </audio>
+    </body>
+    </html>

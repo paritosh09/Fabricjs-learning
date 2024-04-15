@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="fabric.min.js">
+    </script>
+</head>
+
+<body>
+    <title>WorkingForVmx</title>
+    <h1 style="color: rgb(221, 99, 83);">
+
+    </h1>
+    <canvas id="timelinecanvas" width="600" height="250" style="border:5px solid rgb(192, 79, 79)"></canvas>
+    </canvas>
+    <script>
+        const canvas = this.__canvas = new fabric.Canvas('timelinecanvas', {
+
+
+            hoverCursor: 'pointer',
+
+            // hoverCursor:'move',
+            // selection: true
+        });
+
+        canvas.selection = false;
+
+        const textGroup = new fabric.Textbox('vmx demo', {
+            // uid: 0,
+            editable: false,
+
+            lockRotation: true,
+            width: 200,
+            fontSize: 30,
+            top: 85,
+            left: 0,
+
+            // minScaleLimit: 1,
+            hasRotatingPoint: false,
+            // perPixelTargetFind: true,
+            backgroundColor: 'blue',
+            fill: 'orange',
+            lockMovementX:true
+
+            // originX: 'left',
+            // originY: 'bottom'
+
+        });
+        textGroup.previousTop = 85;
+        const textGroup1 = new fabric.Textbox(' Vmx Text', {
+            // uid: 0,
+            editable: false,
+            lockRotation: true,
+            width: 200,
+            fontSize: 30,
+            left: 200,
+
+            top: 130,
+            hasRotatingPoint: false,
+            // perPixelTargetFind: true,
+
+            backgroundColor: 'green',
+            fill: 'orange',
+            lockMovementX:true
+            // originX: 'left',
+
+            // originY: 'bottom'
+
+        });
+        textGroup1.previousTop = 130;
+
+        canvas.add(textGroup, textGroup1);
+
+
+        canvas.on({
+            'object:moving': onChange,
+            // 'object:scaling': onChange,
+            // 'object:modified': onChange,
+
+        });
+
+
+        // function onChange(options) {
+        //     canvas.renderAll();
+        //     options.target.setCoords(); //Sets corner position coordinates based on current angle, width and height
+        //     const selectedObj=options.target;
+        //     canvas.forEachObject(function (obj) {
+        //         if (obj === options.target) return;
+
+        //         if (options.target.isContainedWithinObject(obj) || options.target.intersectsWithObject(obj) || obj.isContainedWithinObject(options.target)) {
+        //             obj.right = obj.bottom + obj.width;
+        //             // obj.left=obj.right+obj.height;
+        //             obj.bottom = obj.top + obj.height;
+
+        //             // obj.top=obj.bottom+obj.width;
+        //             options.target.right = options.target.left + options.target.width;
+        //             options.target.bottom = options.target.top + options.target.height;
+        //             // disty=distx-20;
+        //             // option.target.left=options.target.right+options.target.width;
+        //             // options.target.right=optios.target.left+options.target.height;
+        //             var distx = ((obj.left + obj.width) / 2) - ((options.target.left + options.target.width) / 2);
+        //             var disty = ((obj.top + obj.height) / 2) - ((options.target.top + options.target.height) / 2);
+        //             // edited by last step
+        //             // console.log('value of disty',+disty);
+
+        //             //    if(obj.left>obj.bottom){
+        //             //                 obj.left=obj.bottom+obj.width;
+        //             //    }
+        //             //    else{
+        //             //        obj.left=obj.top+obj.height;
+        //             //    }
+        //             //    if(obj.right>obj.bottom)
+        //             // {
+        //             //     obj.right=obj.bottom+obj.height;
+        //             // }                
+        //             // else{ 
+        //             //     obj.right=obj.top+obj.height;
+        //             // }
+
+        //             // }else{
+        //             //     obj.top=obj-bottom-obj.height;
+        //             // }
+
+        //             if (disty > 0) {
+        //                 options.target.top = obj.top - options.target.height;
+
+        //             } else {
+        //                 options.target.top = obj.top + options.target.height;
+
+        //             }
+        //             if (disty < distx) {
+        //                 disty = distx - disty;
+        //             }
+        //             else {
+        //                 distx = disty;
+        //             }
+        //             // if(disty<options.target.top){
+        //             //     disty=options.target.bottom;
+        //             // }else{
+        //             //     distx=options.target.bottom;
+        //             // }
+        //             // if(disty>options.target.bottom){
+        //             //     disty=options.target.top;
+
+        //             // }else{
+        //             //     distx=options.target.top;
+        //             // }
+
+        //             // if(disty<options.target.bottom){
+        //             //     disty=options.target.bottom;
+
+        //             // }else{
+        //             //     distx=options.target.bottom;
+        //             // }
+ 
+        //             // if (distx > 0) {
+        //             //     options.target.left = obj.left - options.target.width;
+        //             // } else {
+        //             //     options.target.left = obj.left + options.target.width;
+        //             // }
+
+
+        //         } else {
+        //             obj.opacity = '1';
+        //             options.target.lockMovementX = false;
+        //             options.target.lockMovementY = false;
+
+        //         };
+
+        //         canvas.renderAll();
+
+
+        //     });
+        // }
+        function onChange(options) {
+            canvas.renderAll();
+            options.target.setCoords(); //Sets corner position coordinates based on current angle, width and height
+            const selectedObj = options.target;
+            canvas.forEachObject(function (obj) {
+                if (obj === options.target) return;
+                if (selectedObj.previousTop <= selectedObj.top) {
+
+                    if (selectedObj.top >= obj.top && selectedObj.top <= obj.top + obj.height) {
+                        obj.top = obj.top - selectedObj.height * selectedObj.scaleY;
+                    }
+                } else {
+
+                    if (selectedObj.top <= obj.top && selectedObj.top >= obj.top - obj.height) {
+                        obj.top = obj.top + selectedObj.height * selectedObj.scaleY;
+                    }
+                }
+                
+
+                obj.setCoords();
+                canvas.renderAll();
+                selectedObj.previousTop = selectedObj.top;
+
+
+            });
+        }
+    </script>
+</body>
+
+</html>

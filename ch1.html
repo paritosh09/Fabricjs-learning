@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="fabric.min.js">
+    </script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <!-- <script src="sample.js"></script> -->
+</head>
+<h1 style="color: grey(221, 99, 83);">
+    VMX CODE
+</h1>
+
+<body>
+    <title>WorkingForVmx</title>
+
+    <audio id="myAudio" >
+        <source src=" Darzee-Non-Stop-Darkness.mp3" type="audio/mp3">
+
+        Your browser does not support the audio element.
+    </audio>
+     
+    <!-- <video id="myvideo" width="600" style="border:5px solid rgb(192, 79, 79)" controls muted>
+        <source src="mov_bbb.mp4" type="video/mp4">
+
+        Your browser does not support HTML video.
+    </video> -->
+    <!-- <button id="playVideo">playvideo</button> -->
+ 
+
+<video id="video1" class="canvas-img" width="600" height="250" style="border:5px solid rgb(192, 79, 79)">
+  <source id="video_src1" src="mov_bbb.mp4" type="video/mp4">
+</video>
+
+    <br>
+
+
+    <!-- <a href="https://www.bigbuckbunny.org/" target="_blank"></a>
+    <br> -->
+
+
+    <button onclick="play()" type="button">Play </button>
+    <button onclick="pause()" type="button">Stop</button><br>
+    
+    <!-- <button onclick="playVideo()" type="button">Play Video</button>
+    <button onclick="pauseVideo()" type="button">Pause Video</button> -->
+
+ 
+    <canvas id="timelinecanvas" width="600" height="250" style="border:5px solid rgb(192, 79, 79)"></canvas>
+    </canvas>
+    <script>
+        // var x = document.getElementById("myAudio");
+        // document.getElementById("myAudio").loop = true;
+        // var y=document.getElementById("myvideo");
+        function play() {
+            myAudio.play();
+            // myvideo.play();
+            video1.play();
+        }
+
+        function pause() {
+        myAudio.pause();
+            // myvideo.pause();
+            video1.pause();
+        }
+         
+        // function playVideo() {
+        //     y.play();
+        // }
+
+        // function pauseVideo() {
+        //     y.pause();
+        // }
+
+        const canvas = this.__canvas = new fabric.Canvas('timelinecanvas', {
+
+
+            hoverCursor: 'pointer',
+
+            // hoverCursor:'move',
+            // selection: true
+        });
+        
+
+        canvas.selection = false;
+
+        //         fabric.Image.fromURL('C:\Users\Paritosh-Andor\Pictures\Camera Roll\a.jpg', function(myImg) {
+        //  //i create an extra var for to change some image properties
+        //  var img1 = myImg.set({ left: 0, top: 0 ,width:150,height:150});
+        //  canvas.add(img1); 
+        // });
+        // var imgURL = ' C:\Users\Paritosh-Andor\Pictures\Camera Roll\a.jpg';
+
+        // var canvas = new fabric.Canvas('canvas');
+
+        // var pugImg = new Image();
+        // pugImg.onload = function (img) {    
+        //     var pug = new fabric.Image(pugImg, {
+        //         angle: 45,
+        //         width: 500,
+        //         height: 250,
+        //         left: 50,
+        //         top: 70,
+        //         scaleX: .25,
+        //         scaleY: .25
+        //     });
+        //     canvas.add(pug);
+        // };
+        // pugImg.src = imgURL;
+
+
+        const textGroup = new fabric.Textbox('vmx demo', {
+            lockRotation: true,
+            width: 200,
+            fontSize: 30,
+            top: 90,
+            left: 0,
+            hasRotatingPoint: false,
+            backgroundColor: 'blue',
+            fill: 'orange',
+
+
+        });
+        textGroup.previousTop = 85;
+        const textGroup1 = new fabric.Textbox(' Vmx Text', {
+
+            lockRotation: true,
+            width: 200,
+            fontSize: 30,
+            left: 200,
+
+            top: 130,
+            hasRotatingPoint: false,
+
+
+            backgroundColor: 'green',
+            fill: 'orange',
+
+        });
+        textGroup1.previousTop = 130;
+
+
+
+        canvas.add(textGroup, textGroup1);
+
+
+        canvas.on({
+            'object:moving': onChange,
+            // 'object:scaling': scaling,
+            // 'object:modified': onChange,
+
+        });
+
+
+//         let scalingProperties = {
+//     'left': 0,
+//     'top': 0,
+//     'scaleX': 0,
+//     'scaleY': 0,
+// }
+
+
+ 
+//  function scaling(options) {
+     
+//  canvas.renderAll();
+//             options.target.setCoords();
+//     let selectedObj = options.target;
+//     let maxWidth = selectedObj.canvas.width;
+//     let maxHeight = selectedObj.canvas.height;
+    
+//     if (obj === options.target) return;
+
+//     //left border
+//     if(selectedObj.left <= scaleY) {
+//         selectedObj.left = scalingProperties.left = 0;
+//         selectedObj.scaleX = scalingProperties.scaleX;
+//     } else {
+//         scalingProperties.left = selectedObj.left;
+//         scalingProperties.scaleX = selectedObj.scaleX;
+//     }
+
+//     //right border
+//     if((scalingProperties.scaleX * selectedObj.width) + selectedObj.left >= maxWidth) {
+//         selectedObj.scaleX = (maxWidth - scalingProperties.left) / selectedObj.width;
+//     } else {
+//         scalingProperties.scaleX = selectedObj.scaleX;
+//     }
+
+//     //top border
+//     if(selectedObj.top <= scaleY) {
+//         selectedObj.top = scalingProperties.top = 0;
+//         selectedObj.scaleY = scalingProperties.scaleY;
+//     } else {
+//         scalingProperties.top = selectedObj.top;
+//         scalingProperties.scaleY = selectedObj.scaleY;
+//     }
+
+//     //bottom border
+//     if((scalingProperties.scaleY * selectedObj.height) + selectedObj.top >= maxHeight) {
+//         selectedObj.scaleY = (maxHeight - scalingProperties.top) / selectedObj.height;
+//     } else {
+//         scalingProperties.scaleY =selectedObj.scaleY;
+//     }
+// }
+// canvas.setCoords();
+        function onChange(options) {
+            canvas.renderAll();
+            options.target.setCoords(); //Sets corner position coordinates based on current angle, width and height
+            const selectedObj = options.target;
+            
+            canvas.forEachObject(function (obj) {
+                if (obj === options.target) return;
+                if (selectedObj.previousTop <= selectedObj.top) {
+
+                    if (selectedObj.top >= obj.top && selectedObj.top <= obj.top + obj.height) {
+                        obj.top = obj.top - selectedObj.height * selectedObj.scaleY;
+                    }
+                } else {
+
+                    if (selectedObj.top <= obj.top && selectedObj.top >= obj.top - obj.height) {
+                        obj.top = obj.top + selectedObj.height * selectedObj.scaleY;
+                    }
+                    //     if(selectedObj.top>=obj.top && selectedObj.top<=obj.top+obj.height){
+                    //     obj.top=selectedObj.top-obj.top*selectedObj.scaleY;
+                    // }
+                }
+                if(selectedObj.top>=canvas.height){
+                    selectedObj.top=canvas.height;
+                }
+
+                obj.setCoords();
+                canvas.renderAll();
+                selectedObj.previousTop = selectedObj.top;
+                // audioObj=new audio("C:\Users\Paritosh-Andor\Downloads\mixkit-speeding-swoosh-1484.wav");
+                // audio.play();
+
+            });
+        }
+    </script>
+</body>
+
+</html>

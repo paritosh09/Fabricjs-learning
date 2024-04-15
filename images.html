@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="fabric.min.js">
+    </script>
+    <script src="canvas-toBlob.js "></script>
+</head>
+
+<body>
+    <title>WorkingForVmx</title>
+  
+    
+  
+    <canvas id="timelinecanvas" width="600" height="650" style="border:5px solid rgb(192, 79, 79)"></canvas>
+    </canvas>
+    <script id = "main" >
+// you have 20 ds independently of color
+var total = 20,
+    counter = 0,
+    blobs = new Array(total * 2), //but you have 2 set of Ds
+    mouse_pos = {
+        x: 0,
+        y: 0
+    },
+    canvas = new fabric.Canvas('timelinecanvas', {
+        renderOnAddition: false,
+        selection: false
+    }),
+    maxx = canvas.width,
+    maxy = canvas.height,
+    msg, startTime, prevTime, ms, frames;
+
+fabric.Image.fromURL('C:\Users\Paritosh-Andor\Desktop\001.jpg ', blobLoaded);
+fabric.Image.fromURL('C:\Users\Paritosh-Andor\Desktop\002.jpg  ', blobLoaded);
+
+canvas.on('mouse:move', function (options) {
+    mouse_pos = canvas.getPointer(options.e);
+});
+ 
+
+function blobLoaded(img) {
+    for (var i = 0; i < total; i++) {
+        var img = new fabric.Image(img.getElement(), {
+            left: Math.random() * maxx,
+            top: Math.random() * maxy,
+            selectable: false
+        });
+        img.vx = 0;
+        img.vy = 0;
+        canvas.add(img);
+        blobs[counter] = img;
+        counter +=1;
+    }
+    startTime = Date.now(), prevTime = startTime;
+    animate();
+}
+
+function animate() {
+    for (var i = 0; i < total*2; i++) {
+        var blob = blobs[i];
+        var dx = blob.left - mouse_pos.x;
+        var dy = blob.top - mouse_pos.y;
+        var vx = blob.vx;
+        var vy = blob.vy;
+
+        if (dx * dx + dy * dy <= 10000) {
+            vx += dx * 0.01;
+            vy += dy * 0.01;
+        }
+        vx *= 0.95;
+        vy *= 0.95;
+
+        vx += Math.random() - 0.5;
+        vy += Math.random() - 0.5;
+
+
+        var x = blob.left += vx;
+        var y = blob.top += vy;
+
+
+        if (x < 0 || x > maxx || y < 0 || y > maxy) {
+            var r = Math.atan2(y - maxy / 2, x - maxx / 2);
+            vx = -Math.cos(r);
+            vy = -Math.sin(r);
+            blob.vx = vx;
+            blob.vy = vy;
+    
+            blob.animate('angle', '-=50');
+    
+    
+        }
+    
+    
+    
+    
+        fabric.util.requestAnimFrame(animate, canvas.getElement());
+        canvas.renderAll();
+    }
+}
+ 
+    </script>
+ 
+</body>
+</html>

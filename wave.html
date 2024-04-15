@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title id='title'>HTML Page setup Tutorial</title> 
+        <script src='riffwave.js'></script>
+
+        <script type="text/javascript">
+
+    function myFunction()
+    {
+    var data = []; // just an array
+for (var i=0; i<10000; i++) data[i] = /*Math.round(255 * Math.random())*/i; // fill data with random samples
+var wave = new RIFFWAVE(data); // create the wave file
+var audio = new Audio(" Darzee-Non-Stop-Darkness.mp3" );
+ 
+audio.play();
+
+
+    }
+    </script>
+    </head>
+<body>
+
+<button type="button" onclick="myFunction()">Click Me!</button>
+</body>
+</html>

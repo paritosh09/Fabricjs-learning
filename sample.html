@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="SHIFT-JIS">
+<title>sample</title>
+<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.2.3/fabric.min.js"></script>
+<script>
+
+
+$(document).ready(function() {
+
+    canvas = new fabric.Canvas('timelinecanvas');
+    canvas.setWidth(480);
+    canvas.setHeight(360);
+
+    var video1El = document.getElementById('video1');
+    var video1 = new fabric.Image(video1El, {
+      left: 0,
+      top: 0,
+      
+    });
+
+    canvas.add(video1);
+    video1.getElement().load();
+
+
+    $(document.body).on('click', '#play' ,function(){
+        video1.getElement().play();
+
+        //↓It's stops video.
+        /*
+        var filter = new fabric.Image.filters.BlendColor({
+            color:'red',
+            mode: 'tint',
+            alpha: 0.5
+        });
+            canvas.item(0).filters.push(filter);
+        canvas.item(0).applyFilters();
+        */
+
+
+    });
+
+
+
+
+    fabric.util.requestAnimFrame(function render() {
+      canvas.renderAll();
+      fabric.util.requestAnimFrame(render);
+    });
+
+});
+</script>
+
+</head>
+<body>
+<button id="play">play</button>
+ 
+
+<video id="video1" class="canvas-img" width="480" height="360" style="border:5px solid rgb(192, 79, 79)">
+  <source id="video_src1" src="mov_bbb.mp4" type="video/mp4">
+</video>
+
+</body>
+</html> 
